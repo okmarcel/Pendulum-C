@@ -13,7 +13,7 @@ typedef struct {
 
 bool simulation_init(Simulation *sim, const char *title, int width, int height);
 
-void simulation_play(Simulation *sim);
+void simulation_run(Simulation *sim);
 
 void simulation_quit(Simulation *sim);
 

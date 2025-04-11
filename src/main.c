@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include "simulation.h"
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HEIGHT = 600;
 
-#define TITLE "pendulum simulation"
+const char *TITLE = "Pendulum Simulation";
 
 int main(void) {
     Simulation sim = {0};
@@ -14,7 +14,7 @@ int main(void) {
         return 1;
     }
 
-    simulation_play(&sim);
+    simulation_run(&sim);
 
     simulation_quit(&sim);
 

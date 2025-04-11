@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include "simulation.h"
+#include "renderer.h"
 
 bool simulation_init(Simulation *sim, const char *title, int width, int height) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -20,7 +21,10 @@ bool simulation_init(Simulation *sim, const char *title, int width, int height) 
     return true;
 }
 
-void simulation_play(Simulation *sim) {
+void simulation_run(Simulation *sim) {
+    int w;
+    int h;
+    SDL_GetWindowSize(sim->window, &w, &h);
     sim->running = true;
 
     SDL_Event e;
@@ -30,20 +34,19 @@ void simulation_play(Simulation *sim) {
                 sim->running = false;
                 break;
             }
-            
-            SDL_SetRenderDrawColor(sim->renderer, 0, 0, 0, 255);
-            SDL_RenderClear(sim->renderer);
-            SDL_RenderPresent(sim->renderer);
-
-            SDL_Delay(16);
         }
+
+        draw_background(sim->renderer);
+        draw_sample_circle(sim->renderer, w/2, h/2, 20);
+        
+        SDL_RenderPresent(sim->renderer);
+        SDL_Delay(16);
     }
 
     return;
 }
 
 void simulation_quit(Simulation *sim) {
-    
     SDL_DestroyWindow(sim->window);
     SDL_DestroyRenderer(sim->renderer);
     SDL_Quit();
