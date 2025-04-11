@@ -1,8 +1,22 @@
 #include <stdio.h>
-#include <SDL2/SDL.h>
+#include "simulation.h"
+
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
+
+#define TITLE "pendulum simulation"
 
 int main(void) {
-    printf("Hello world\n");
+    Simulation sim = {0};
+
+    if (!simulation_init(&sim, TITLE, WINDOW_WIDTH, WINDOW_HEIGHT)) {
+        printf("Error while initializing\n");
+        return 1;
+    }
+
+    simulation_play(&sim);
+
+    simulation_quit(&sim);
 
     return 0;
 }
