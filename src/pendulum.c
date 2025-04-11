@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include "pendulum.h"
+#include "constants.h"
 
 void free_nodes(Pendulum *pend) {
     free(pend->root);
@@ -7,7 +8,7 @@ void free_nodes(Pendulum *pend) {
 
 bool append_node(Node *parent, int radius, int x, int y) {
     Node *new_node = malloc(sizeof(Node));
-    if (new_node == NULL) {
+    if (!new_node) {
         return false;
     }
 
@@ -24,15 +25,15 @@ bool append_node(Node *parent, int radius, int x, int y) {
 
 bool pendulum_init(Pendulum *pend) {
     Node *node = malloc(sizeof(Node));
-    if (node == NULL) {
+    if (!node) {
         return false;
     }
 
     node->child = NULL;
     node->parent = NULL;
-    node->radius = 12;
-    node->x = 400;
-    node->y = 300;
+    node->radius = NODE_RADIUS;
+    node->x = WINDOW_WIDTH / 2;
+    node->y = WINDOW_HEIGHT / 2;
     pend->root = node;
 
     return true;

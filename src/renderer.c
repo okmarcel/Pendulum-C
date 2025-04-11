@@ -1,14 +1,23 @@
 #include <SDL2/SDL.h>
 #include "renderer.h"
+#include "constants.h"
+
+void set_color(SDL_Renderer *renderer, SDL_Color color) {
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+    return;
+}
 
 void draw_background(SDL_Renderer *renderer) {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    set_color(renderer, COLOR_BACKGROUND);
     SDL_RenderClear(renderer);
     return;
 }
 
-void draw_sample_circle(SDL_Renderer *renderer, int xc, int yc, int r) {
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+void draw_node(SDL_Renderer *renderer, Node *node) {
+    set_color(renderer, COLOR_NODE);
+    const int r = node->radius;
+    const int xc = node->x;
+    const int yc = node->y;
     int d = r * 2;
 
     int x = r;
@@ -43,18 +52,13 @@ void draw_sample_circle(SDL_Renderer *renderer, int xc, int yc, int r) {
             error += tx - d;
         }
     }
+
     return;
 }
 
-void draw_node(SDL_Renderer *renderer, Node *node) {
-    draw_sample_circle(renderer, node->x, node->y, node->radius);
-    
-    return;
-}
-
-void draw_arm(SDL_Renderer *renderer, Node *node) {
+void draw_rod(SDL_Renderer *renderer, Node *node) {
     Node *node_parent = node->parent;
-    SDL_SetRenderDrawColor(renderer, 215, 215, 215, 255);
+    set_color(renderer, COLOR_ROD);
     SDL_RenderDrawLine(renderer, node->x, node->y, node_parent->x, node_parent->y);
 
     return;
@@ -67,7 +71,7 @@ void draw_pendulum(SDL_Renderer *renderer, Pendulum *pend) {
 
     while (node) {
         draw_node(renderer, node);
-        draw_arm(renderer, node);
+        draw_rod(renderer, node);
         node = node->child;
     }
     

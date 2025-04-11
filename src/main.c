@@ -1,13 +1,9 @@
 #include <stdio.h>
 #include "simulation.h"
-
-const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
-
-const char *TITLE = "Pendulum Simulation";
+#include "constants.h"
 
 int main(void) {
-    Simulation sim = {0};
+    Simulation sim;
 
     if (!simulation_init(&sim, TITLE, WINDOW_WIDTH, WINDOW_HEIGHT)) {
         printf("Error while initializing\n");
@@ -16,7 +12,7 @@ int main(void) {
 
     simulation_run(&sim);
 
-    simulation_quit(&sim);
+    simulation_clean(&sim);
 
     return 0;
 }

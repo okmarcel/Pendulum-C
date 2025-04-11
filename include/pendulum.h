@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 
-typedef struct {
+typedef struct Node {
     int radius;
 
     int x;

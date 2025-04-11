@@ -15,6 +15,6 @@ bool simulation_init(Simulation *sim, const char *title, int width, int height);
 
 void simulation_run(Simulation *sim);
 
-void simulation_quit(Simulation *sim);
+void simulation_clean(Simulation *sim);
 
 #endif

@@ -1,12 +1,11 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include <SDL2/SDL.h>
 #include "pendulum.h"
 
-void draw_background(SDL_Renderer *renderer);
+void set_color(SDL_Renderer *renderer, SDL_Color color);
 
-void draw_sample_circle(SDL_Renderer *renderer, int xc, int yc, int r);
+void draw_background(SDL_Renderer *renderer);
 
 void draw_node(SDL_Renderer *renderer, Node *node);
 

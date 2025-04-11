@@ -22,17 +22,13 @@ bool simulation_init(Simulation *sim, const char *title, int width, int height) 
 }
 
 void simulation_run(Simulation *sim) {
-    int w;
-    int h;
-
+    sim->running = true;
+    
     Pendulum pendulum;
     if (!pendulum_init(&pendulum)) {
         printf("Failed initialization of pendulum\n");
         return;
     }
-
-    SDL_GetWindowSize(sim->window, &w, &h);
-    sim->running = true;
 
     SDL_Event e;
     while (sim->running) {
@@ -55,7 +51,7 @@ void simulation_run(Simulation *sim) {
     return;
 }
 
-void simulation_quit(Simulation *sim) {
+void simulation_clean(Simulation *sim) {
     SDL_DestroyWindow(sim->window);
     SDL_DestroyRenderer(sim->renderer);
     SDL_Quit();
