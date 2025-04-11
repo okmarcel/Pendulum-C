@@ -24,6 +24,13 @@ bool simulation_init(Simulation *sim, const char *title, int width, int height) 
 void simulation_run(Simulation *sim) {
     int w;
     int h;
+
+    Pendulum pendulum;
+    if (!pendulum_init(&pendulum)) {
+        printf("Failed initialization of pendulum\n");
+        return;
+    }
+
     SDL_GetWindowSize(sim->window, &w, &h);
     sim->running = true;
 
@@ -37,11 +44,13 @@ void simulation_run(Simulation *sim) {
         }
 
         draw_background(sim->renderer);
-        draw_sample_circle(sim->renderer, w/2, h/2, 20);
+        draw_pendulum(sim->renderer, &pendulum);
         
         SDL_RenderPresent(sim->renderer);
         SDL_Delay(16);
     }
+
+    free_nodes(&pendulum);
 
     return;
 }
