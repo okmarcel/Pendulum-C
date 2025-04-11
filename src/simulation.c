@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <SDL2/SDL.h>
 #include "simulation.h"
 #include "renderer.h"
+#include "constants.h"
 
 bool simulation_init(Simulation *sim, const char *title, int width, int height) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -29,6 +31,7 @@ void simulation_run(Simulation *sim) {
         printf("Failed initialization of pendulum\n");
         return;
     }
+    bool first_node_attached = false;
 
     SDL_Event e;
     while (sim->running) {
@@ -36,6 +39,12 @@ void simulation_run(Simulation *sim) {
             if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE) {
                 sim->running = false;
                 break;
+            }
+            if (!first_node_attached) {
+                append_node(pendulum.root, NODE_RADIUS, e.motion.x, e.motion.y);
+            }
+            if (e.type == SDL_MOUSEBUTTONUP) {
+                first_node_attached = true;
             }
         }
 
