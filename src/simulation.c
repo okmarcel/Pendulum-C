@@ -31,6 +31,8 @@ void simulation_run(Simulation *sim) {
         printf("Failed initialization of pendulum\n");
         return;
     }
+    append_node(pendulum.root);
+
     bool first_node_attached = false;
 
     SDL_Event e;
@@ -41,7 +43,7 @@ void simulation_run(Simulation *sim) {
                 break;
             }
             if (!first_node_attached) {
-                append_node(pendulum.root, NODE_RADIUS, e.motion.x, e.motion.y);
+                update_node_pos(pendulum.root->child, e.motion.x, e.motion.y);
             }
             if (e.type == SDL_MOUSEBUTTONUP) {
                 first_node_attached = true;

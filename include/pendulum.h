@@ -20,7 +20,9 @@ typedef struct {
 
 void free_nodes(Pendulum *pend);
 
-bool append_node(Node *parent, int radius, int x, int y);
+void update_node_pos(Node *node, int new_x, int new_y);
+
+bool append_node(Node *parent);
 
 bool pendulum_init(Pendulum *pend);
 
