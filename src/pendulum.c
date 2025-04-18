@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdlib.h>
 #include "pendulum.h"
 #include "constants.h"
 
