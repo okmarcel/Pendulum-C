@@ -31,19 +31,24 @@ void simulation_run(Simulation *sim) {
         printf("Failed initialization of pendulum\n");
         return;
     }
-    append_node(pendulum.root);
+    if (!append_node(pendulum.root)) {
+        printf("Failed to append a node\n");
+        return;
+    }
 
     bool first_node_attached = false;
 
     SDL_Event e;
     while (sim->running) {
         while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE) {
+            if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
                 sim->running = false;
                 break;
             }
             if (!first_node_attached) {
-                update_node_pos(pendulum.root->child, e.motion.x, e.motion.y);
+                if (e.type == SDL_MOUSEMOTION) {
+                    update_node_pos(pendulum.root->child, e.motion.x, e.motion.y);
+                }
             }
             if (e.type == SDL_MOUSEBUTTONUP) {
                 first_node_attached = true;
