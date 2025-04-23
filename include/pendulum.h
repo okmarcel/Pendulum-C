@@ -7,8 +7,11 @@
 typedef struct Node {
     int radius;
 
+    double rod_length;
     int x;
     int y;
+    double theta; // current angle in radians
+    double omega; // current angular velocity
 
     struct Node *parent;
     struct Node *child;
@@ -20,7 +23,7 @@ typedef struct {
 
 void free_nodes(Pendulum *pend);
 
-void update_node_pos(Node *node, int new_x, int new_y);
+void new_node_init_values(Node *node);
 
 bool append_node(Node *parent);
 

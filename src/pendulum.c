@@ -16,11 +16,12 @@ void free_nodes(Pendulum *pend) {
     return;
 }
 
-void update_node_pos(Node *node, int new_x, int new_y) {
-    node->x = new_x;
-    node->y = new_y;
-
-    return;
+void new_node_init_values(Node *node) {
+    int x_rel = node->x - node->parent->x;
+    int y_rel = node->y - node->parent->y;
+    node->rod_length = sqrt(pow(x_rel, 2) + pow(y_rel, 2));
+    node->theta = atan2(x_rel, y_rel);
+    node->omega = 0;
 }
 
 bool append_node(Node *parent) {

@@ -4,6 +4,7 @@
 #include "simulation.h"
 #include "renderer.h"
 #include "constants.h"
+#include "physics.h"
 
 bool simulation_init(Simulation *sim, const char *title, int width, int height) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -47,12 +48,22 @@ void simulation_run(Simulation *sim) {
             }
             if (!first_node_attached) {
                 if (e.type == SDL_MOUSEMOTION) {
-                    update_node_pos(pendulum.root->child, e.motion.x, e.motion.y);
+                    pendulum.root->child->x = e.motion.x;
+                    pendulum.root->child->y = e.motion.y;
+                }
+                if (e.type == SDL_MOUSEBUTTONUP) {
+                    first_node_attached = true;
+                    new_node_init_values(pendulum.root->child);
                 }
             }
-            if (e.type == SDL_MOUSEBUTTONUP) {
-                first_node_attached = true;
+        }
+
+        if (first_node_attached) {
+            if (pendulum.root->child->rod_length == 0) {
+                printf("error: division by 0\n");
+                return;
             }
+            calculate_node_pos(pendulum.root->child);
         }
 
         draw_background(sim->renderer);

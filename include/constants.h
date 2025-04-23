@@ -14,4 +14,7 @@ extern const SDL_Color COLOR_ROD;
 
 #define NODE_RADIUS 8
 
+#define GRAVITY 9.81f
+#define SPEED 0.2f
+
 #endif
